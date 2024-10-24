@@ -1,10 +1,12 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
+import { useAuth } from './AuthContext';
 
 const SettingsScreen = () => {
+  const {user} = useAuth();
   return (
     <View style={styles.container}>
-      <Text style={styles.welcome}>Settings Screen</Text>
+      <Text style={styles.welcome}>Settings Screen this is  me {user.username}</Text>
     </View>
   );
 };

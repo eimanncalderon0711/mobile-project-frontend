@@ -1,47 +1,57 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, StyleSheet, Alert, ActivityIndicator } from 'react-native';
+import { useAuth } from './AuthContext';
+import AntDesign from '@expo/vector-icons/AntDesign';
 
 const LoginScreen = ({ navigation }) => {
+  const {login, isLoading} = useAuth();
   const [email, setEmail] = useState('');
+  const [show, setShow] = useState(true);
   const [password, setPassword] = useState('');
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !password) {
       Alert.alert('Error', 'Please enter both email and password.');
       return;
     }
 
-    if (email === 'test@example.com' && password === 'password123') {
-      Alert.alert('Success', 'Logged in successfully!');
-      navigation.navigate('Home'); 
-    } else {
-      Alert.alert('Error', 'Invalid email or password.');
-    }
+    await login(email, password);
+    navigation.navigate("Home");
+    
   };
 
   return (
+    <>
     <View style={styles.container}>
       <Text style={styles.title}>Login</Text>
       <TextInput
         style={styles.input}
         placeholder="Email"
         value={email}
-        onChangeText={setEmail}
-        keyboardType="email-address"
-        autoCapitalize="none"
+        onChangeText={(e)=>setEmail(e)}
       />
+       <View style={{backgroundColor:'white', height:50, borderRadius:5, paddingHorizontal:10, borderColor: '#ccc', borderWidth:1,  flexDirection:'row' , alignItems:"center"}}>
       <TextInput
-        style={styles.input}
+        style={{flex:1}}
         placeholder="Password"
         value={password}
-        onChangeText={setPassword}
-        secureTextEntry
-        autoCapitalize="none"
+        onChangeText={(e) => setPassword(e)}
+        secureTextEntry={show}
       />
-      <TouchableOpacity style={styles.button} onPress={handleLogin}>
-        <Text style={styles.buttonText}>Login</Text>
+      <TouchableOpacity onPress={() => setShow(!show)}>
+        <AntDesign name="eye" size={24} color="black" />
       </TouchableOpacity>
+      </View>
+      {isLoading ? <ActivityIndicator size={"large"} color={"black"}/> : (<TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Login</Text>
+      </TouchableOpacity>) }
+      <View style={{paddingTop:20}}>
+        <TouchableOpacity onPress={() => navigation.navigate('Register')}>
+          <Text style={{fontSize:15, fontWeight: 400}}>Dont Have An Accout? <Text style={{color:'blue', fontWeight:500}}> Register Here</Text></Text>
+        </TouchableOpacity>
+      </View>
     </View>
+    </>
   );
 };
 
@@ -70,6 +80,7 @@ const styles = StyleSheet.create({
   button: {
     backgroundColor: '#007bff',
     paddingVertical: 15,
+    marginTop: 10,
     borderRadius: 5,
     alignItems: 'center',
   },
