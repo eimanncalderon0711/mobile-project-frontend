@@ -14,9 +14,7 @@ const LoginScreen = ({ navigation }) => {
       Alert.alert('Error', 'Please enter both email and password.');
       return;
     }
-
-    await login(email, password);
-    navigation.navigate("Home");
+    await login(email, password, navigation);
     
   };
 

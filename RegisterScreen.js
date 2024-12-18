@@ -68,6 +68,11 @@ const RegisterScreen = ({ navigation }) => {
       {isLoading ? <ActivityIndicator size={'large'} color={"black"}/> : (<TouchableOpacity style={[styles.button, {marginTop:10}]} onPress={handleLogin}>
         <Text style={styles.buttonText}>Register</Text>
       </TouchableOpacity>)}
+      <View style={{paddingTop:20}}>
+        <TouchableOpacity onPress={() => navigation.navigate('Login')}>
+          <Text style={{fontSize:15, fontWeight: 400}}>Already have an account? <Text style={{color:'blue', fontWeight:500}}> Login here</Text></Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 };
