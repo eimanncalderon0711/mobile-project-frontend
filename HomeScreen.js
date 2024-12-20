@@ -2,7 +2,7 @@ import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ProfileScreen from './ProfileScreen';
 import SettingsScreen from './SettingsScreen';
-import SupportScreen from './SupportScreen'; // New Support Screen for the tab
+import LogoutScreen from './LogoutScreen'; // New Support Screen for the tab
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import Feather from '@expo/vector-icons/Feather';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
@@ -39,8 +39,8 @@ const HomeScreen = () => {
       }}
     />
     <Tab.Screen 
-      name="Support" 
-      component={SupportScreen}
+      name="Logout" 
+      component={LogoutScreen}
       options={{tabBarStyle: {
         paddingTop: 10, 
         paddingBottom: 10, 
